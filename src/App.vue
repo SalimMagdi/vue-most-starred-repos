@@ -10,25 +10,27 @@
     </div>
   </div>
 
-  <div id="main-wrapper" class="flex min-h-screen container mx-auto">
+  <div id="main-wrapper"
+class="flex min-h-screen container mx-auto">
     <div
       id="filters-container"
       class="w-80 shrink-0 min-h-full w-2/6 border-r dark:border-gray-700 pr-4 py-6"
     >
-      <Filters />
+      <RepoFilters />
     </div>
 
-    <div id="results-container" class="grow pl-4 py-6">
+    <div id="results-container"
+class="grow pl-4 py-6">
       <h2 class="text-2xl mb-4">Search Results</h2>
       <hr class="mb-3 dark:border-gray-700" />
 
-      <Repos />
+      <LanguagesWrapper />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import Repos from './components/Repos.vue'
-import Filters from './components/Filters.vue'
-import DarkModeToggle from './components/DarkModeToggle.vue'
+import LanguagesWrapper from '@/components/LanguagesWrapper.vue'
+import RepoFilters from '@/components/RepoFilters.vue'
+import DarkModeToggle from '@/components/DarkModeToggle.vue'
 </script>

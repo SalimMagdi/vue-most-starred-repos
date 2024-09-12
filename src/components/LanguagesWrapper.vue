@@ -1,5 +1,6 @@
 <template>
-  <div v-if="!languages.length" class="p-4 text-center w-full">
+  <div v-if="!languages.length"
+class="p-4 text-center w-full">
     Please select at least one programming language.
   </div>
 
@@ -23,13 +24,20 @@ import LanguageRepos from './LanguageRepos.vue'
 import { filters } from '@/stores/filters-store'
 import { watch } from 'vue'
 
+interface ComponentData {
+  languages: string[];
+  controller: AbortController;
+}
+
 export default {
   components: { LanguageRepos },
   data() {
-    return {
+    const data: ComponentData = {
       languages: [],
       controller: new AbortController()
     }
+
+    return data
   },
   mounted() {
     watch(filters, () => this.setLanguages())

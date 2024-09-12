@@ -2,7 +2,9 @@
   <div class="text-sm mb-1 flex justify-between">
     <span>{{ label }}</span>
 
-    <CloseIcon v-if="value" class="w-4 cursor-normal" @click="handleInputReset" />
+    <CloseIcon v-if="value"
+class="w-4 cursor-normal"
+@click="handleInputReset" />
   </div>
 
   <input
@@ -13,7 +15,7 @@
   />
 </template>
 
-<script>
+<script lang="ts">
 import CloseIcon from '@/assets/icons/CloseIcon.vue'
 
 export default {
@@ -28,7 +30,7 @@ export default {
     }
   },
   methods: {
-    handleValueChange(event) {
+    handleValueChange(event: any) {
       this.$emit('valueChange', event)
     },
     handleInputReset() {

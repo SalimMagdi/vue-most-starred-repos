@@ -1,13 +1,21 @@
 <template>
-  <div v-if="!repos" class="p-4 text-center w-full">Loading {{ language }} repositories...</div>
-  <div v-if="repos && !repos.length" class="p-4 text-center w-full">
+  <div v-if="!repos"
+class="p-4 text-center w-full">Loading {{ language }} repositories...</div>
+  <div v-if="repos && !repos.length"
+class="p-4 text-center w-full">
     No results to show for your selected filters.
   </div>
 
-  <RepoCard v-for="repo in repos" :key="repo.id" :repo="repo" />
+  <RepoCard v-for="repo in repos"
+:key="repo.id"
+:repo="repo" />
 </template>
 
 <script lang="ts">
+interface ComponentData {
+  repos: any[] | null
+  controller: AbortController
+}
 import { watch } from 'vue'
 import axios from 'axios'
 import RepoCard from './RepoCard.vue'
@@ -18,10 +26,12 @@ export default {
     language: String
   },
   data() {
-    return {
+    const data: ComponentData = {
       repos: null,
       controller: new AbortController()
     }
+
+    return data
   },
   mounted() {
     watch(filters, () => this.searchRepos())

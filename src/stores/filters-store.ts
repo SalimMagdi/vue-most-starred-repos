@@ -1,10 +1,17 @@
 import { ref } from 'vue'
 
-export const filters = ref({
+interface RepoFilters {
+  languages: string[]
+  minStars: string | null
+  fromDate: string | null
+  toDate: string | null
+}
+
+export const filters = ref(<RepoFilters>{
   languages: [],
-  minStart: null,
+  minStars: null,
   fromDate: null,
-  ToDate: null
+  toDate: null
 })
 
 export const updateFilters = (updatedFilters: { [key: string]: unknown }) => {

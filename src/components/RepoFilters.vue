@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import LanguageSelector from './LanguageSelector.vue'
 import MinStarsInput from './MinStarsInput.vue'
 import DateInput from './DateInput.vue'
@@ -33,10 +33,10 @@ import { updateFilters } from '@/stores/filters-store'
 export default {
   components: { LanguageSelector, MinStarsInput, DateInput },
   methods: {
-    handleDateChange(action, event) {
+    handleDateChange(action: string, event: any) {
       updateFilters({ [action]: event.target.value })
     },
-    handleDateReset(action) {
+    handleDateReset(action: string) {
       updateFilters({ [action]: null })
     }
   }

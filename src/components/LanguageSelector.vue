@@ -7,7 +7,8 @@
     >
       {{ language }}
 
-      <CloseIcon class="w-4 cursor-normal" @click="() => handleLanguageRemoval(language)" />
+      <CloseIcon class="w-4 cursor-normal"
+@click="() => handleLanguageRemoval(language)" />
     </div>
   </div>
 
@@ -16,36 +17,49 @@
     @change="handleLanguageSelection"
     class="border w-full h-10 rounded text-sm dark:bg-gray-700 dark:border-gray-700 px-3"
   >
-    <option value="null" disabled selected>Select a language</option>
-    <option v-for="option in LANGUAGES" :key="option" :value="option">{{ option }}</option>
+    <option value="null"
+disabled
+selected>Select a language</option>
+    <option v-for="option in LANGUAGES"
+:key="option"
+:value="option">{{ option }}</option>
   </select>
 </template>
 
-<script>
+<script lang="ts">
 import LANGUAGES from '@/utils/languages'
 import CloseIcon from '@/assets/icons/CloseIcon.vue'
 import { updateFilters } from '@/stores/filters-store'
 
+interface ComponentData {
+  selectedLanguages: string[];
+  model: string | null;
+  LANGUAGES: string[];
+}
+
 export default {
   components: { CloseIcon },
   data() {
-    return {
+    const data: ComponentData = {
       selectedLanguages: [],
       model: null,
       LANGUAGES
     }
+
+    return data
   },
   methods: {
-    handleLanguageSelection: function () {
-      !this.selectedLanguages.includes(this.model) && this.selectedLanguages.push(this.model)
+    handleLanguageSelection() {
+      !this.selectedLanguages.includes(this.model as string) &&
+        this.selectedLanguages.push(this.model as string)
       this.model = null
       this.updateStore()
     },
-    handleLanguageRemoval: function (language) {
+    handleLanguageRemoval(language: string) {
       this.selectedLanguages = this.selectedLanguages.filter((lang) => lang !== language)
       this.updateStore()
     },
-    updateStore: function () {
+    updateStore() {
       updateFilters({ languages: this.selectedLanguages })
     }
   }

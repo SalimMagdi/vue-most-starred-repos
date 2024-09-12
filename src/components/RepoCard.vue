@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="repo"
     class="border p-4 rounded flex flex-col gap-2 bg-white dark:bg-gray-950 dark:border-gray-950 transition hover:-translate-y-1"
   >
     <a
@@ -10,7 +11,8 @@
       {{ repo.full_name }}
     </a>
 
-    <div v-if="repo.description" class="text-sm">
+    <div v-if="repo.description"
+class="text-sm">
       {{ repo.description.slice(0, 120) }} {{ repo.description.length > 120 ? '...' : '' }}
     </div>
 
@@ -23,7 +25,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import HeartIcon from '../assets/icons/HeartIcon.vue'
 
 export default {

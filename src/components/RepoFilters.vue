@@ -25,20 +25,20 @@
 </template>
 
 <script lang="ts">
-import LanguageSelector from './LanguageSelector.vue'
-import MinStarsInput from './MinStarsInput.vue'
-import DateInput from './DateInput.vue'
-import { updateFilters } from '@/stores/filters-store'
+import LanguageSelector from './LanguageSelector.vue';
+import MinStarsInput from './MinStarsInput.vue';
+import DateInput from './DateInput.vue';
+import { updateFilters } from '@/stores/filters-store';
 
 export default {
   components: { LanguageSelector, MinStarsInput, DateInput },
   methods: {
     handleDateChange(action: string, event: any) {
-      updateFilters({ [action]: event.target.value })
+      updateFilters({ [action]: event.target.value });
     },
     handleDateReset(action: string) {
-      updateFilters({ [action]: null })
+      updateFilters({ [action]: null });
     }
   }
-}
+};
 </script>

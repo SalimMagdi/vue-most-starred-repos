@@ -7,8 +7,7 @@
     >
       {{ language }}
 
-      <CloseIcon class="w-4 cursor-normal"
-@click="() => handleLanguageRemoval(language)" />
+      <CloseIcon class="w-4 cursor-normal" @click="() => handleLanguageRemoval(language)" />
     </div>
   </div>
 
@@ -17,19 +16,15 @@
     @change="handleLanguageSelection"
     class="border w-full h-10 rounded text-sm dark:bg-gray-700 dark:border-gray-700 px-3"
   >
-    <option value="null"
-disabled
-selected>Select a language</option>
-    <option v-for="option in LANGUAGES"
-:key="option"
-:value="option">{{ option }}</option>
+    <option value="null" disabled selected>Select a language</option>
+    <option v-for="option in LANGUAGES" :key="option" :value="option">{{ option }}</option>
   </select>
 </template>
 
 <script lang="ts">
-import LANGUAGES from '@/utils/languages'
-import CloseIcon from '@/assets/icons/CloseIcon.vue'
-import { updateFilters } from '@/stores/filters-store'
+import LANGUAGES from '@/utils/languages';
+import CloseIcon from '@/assets/icons/CloseIcon.vue';
+import { updateFilters } from '@/stores/filters-store';
 
 interface ComponentData {
   selectedLanguages: string[];
@@ -44,24 +39,24 @@ export default {
       selectedLanguages: [],
       model: null,
       LANGUAGES
-    }
+    };
 
-    return data
+    return data;
   },
   methods: {
     handleLanguageSelection() {
       !this.selectedLanguages.includes(this.model as string) &&
-        this.selectedLanguages.push(this.model as string)
-      this.model = null
-      this.updateStore()
+        this.selectedLanguages.push(this.model as string);
+      this.model = null;
+      this.updateStore();
     },
     handleLanguageRemoval(language: string) {
-      this.selectedLanguages = this.selectedLanguages.filter((lang) => lang !== language)
-      this.updateStore()
+      this.selectedLanguages = this.selectedLanguages.filter((lang) => lang !== language);
+      this.updateStore();
     },
     updateStore() {
-      updateFilters({ languages: this.selectedLanguages })
+      updateFilters({ languages: this.selectedLanguages });
     }
   }
-}
+};
 </script>

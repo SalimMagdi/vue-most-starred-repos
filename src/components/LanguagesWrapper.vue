@@ -1,6 +1,5 @@
 <template>
-  <div v-if="!languages.length"
-class="p-4 text-center w-full">
+  <div v-if="!languages.length" class="p-4 text-center w-full">
     Please select at least one programming language.
   </div>
 
@@ -20,9 +19,9 @@ class="p-4 text-center w-full">
 </template>
 
 <script lang="ts">
-import LanguageRepos from './LanguageRepos.vue'
-import { filters } from '@/stores/filters-store'
-import { watch } from 'vue'
+import LanguageRepos from './LanguageRepos.vue';
+import { filters } from '@/stores/filters-store';
+import { watch } from 'vue';
 
 interface ComponentData {
   languages: string[];
@@ -35,19 +34,19 @@ export default {
     const data: ComponentData = {
       languages: [],
       controller: new AbortController()
-    }
+    };
 
-    return data
+    return data;
   },
   mounted() {
-    watch(filters, () => this.setLanguages())
+    watch(filters, () => this.setLanguages());
   },
   methods: {
     setLanguages() {
-      this.languages = filters.value.languages
+      this.languages = filters.value.languages;
     }
   }
-}
+};
 </script>
 
 <style>
@@ -57,5 +56,11 @@ export default {
 
 .languages-wrapper > div:not(.w-full) {
   width: calc(33.333% - 8px);
+}
+
+@media only screen and (max-width: 1023px) {
+  .languages-wrapper > div:not(.w-full) {
+    width: 100%;
+  }
 }
 </style>

@@ -1,6 +1,11 @@
 <template>
-  <div v-if="!languages.length" class="p-4 text-center w-full">
-    Please select at least one programming language.
+  <div
+    v-if="!languages.length"
+    class="p-4 text-center w-full flex flex-col justify-center items-center gap-4"
+  >
+    <CodeIcon class="w-32 h-32 opacity-60" />
+
+    <span>Please select at least one programming language.</span>
   </div>
 
   <div
@@ -19,6 +24,7 @@
 </template>
 
 <script lang="ts">
+import CodeIcon from '../assets/icons/CodeIcon.vue';
 import LanguageRepos from './LanguageRepos.vue';
 import { filters } from '@/stores/filters-store';
 import { watch } from 'vue';
@@ -29,7 +35,7 @@ interface ComponentData {
 }
 
 export default {
-  components: { LanguageRepos },
+  components: { LanguageRepos, CodeIcon },
   data() {
     const data: ComponentData = {
       languages: [],

@@ -1,0 +1,58 @@
+const LANGUAGES = [
+  // Programming Languages
+  'JavaScript',
+  'Python',
+  'Java',
+  'C++',
+  'C#',
+  'PHP',
+  'Ruby',
+  'TypeScript',
+  'Go',
+  'Swift',
+  'Kotlin',
+  'Rust',
+  'Dart',
+  'Scala',
+  'Perl',
+  'R',
+  'Objective-C',
+  'Shell',
+  'Haskell',
+  'Lua',
+  'Elixir',
+  'Clojure',
+  'Erlang',
+  'F#',
+  'Groovy',
+  'VHDL',
+  'Verilog',
+  'Assembly',
+  'Matlab',
+  'Vala',
+  'Julia',
+  'Fortran',
+  'OCaml',
+  'Tcl',
+  'Solidity',
+  'COBOL',
+  'Zig',
+
+  // Markup Languages
+  'HTML',
+  'XML',
+  'Markdown',
+  'LaTeX',
+  'YAML',
+  'TOML',
+  'JSON',
+
+  // Styling Languages
+  'CSS',
+  'SCSS',
+  'Sass',
+  'Less',
+  'Stylus'
+]
+
+export default LANGUAGES

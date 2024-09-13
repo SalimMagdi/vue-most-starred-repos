@@ -2,7 +2,7 @@
 
 ## 🔥 Live Demo
 
-[https://hiresalem.com/vue-most-starred-repos]
+https://hiresalem.com/vue-most-starred-repos
 
 ## Recommended IDE Setup
 

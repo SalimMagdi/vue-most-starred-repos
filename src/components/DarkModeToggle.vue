@@ -7,8 +7,10 @@
       v-model="darkMode"
       @change="toggleDarkMode"
     />
-    <label for="checkbox"
-class="checkbox-label">
+    <label
+      for="checkbox"
+      class="checkbox-label"
+    >
       <i class="fas fa-moon"></i>
       <i class="fas fa-sun"></i>
       <span class="ball"></span>
@@ -17,20 +19,21 @@ class="checkbox-label">
 </template>
 
 <script lang="ts">
+import { ref } from 'vue'
+
 export default {
-  data() {
-    return {
-      darkMode: true
-    }
-  },
-  methods: {
-    toggleDarkMode(event: any) {
+  setup() {
+    const darkMode = ref(true)
+
+    const toggleDarkMode = (event: any) => {
       if (event.target.checked) {
         document.body.setAttribute('data-mode', 'dark')
       } else {
         document.body.removeAttribute('data-mode')
       }
     }
+
+    return { darkMode, toggleDarkMode }
   }
 }
 </script>

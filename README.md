@@ -1,6 +1,8 @@
 # vue-most-starred-repos
 
-This template should help get you started developing with Vue 3 in Vite.
+## 🔥 Live Demo
+
+[https://hiresalem.com/vue-most-starred-repos]
 
 ## Recommended IDE Setup
 

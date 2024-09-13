@@ -17,35 +17,31 @@
 <script lang="ts">
 import CloseIcon from '@/assets/icons/CloseIcon.vue'
 import { updateFilters } from '@/stores/filters.store'
-
-interface ComponentData {
-  minStars: number | null
-}
+import { ref, type Ref } from 'vue'
 
 export default {
   components: { CloseIcon },
-  data() {
-    const data: ComponentData = {
-      minStars: null
+  setup() {
+    const minStars: Ref<number | null> = ref(null)
+
+    const handleMinStarsUpdate = () => {
+      if (isNaN(minStars.value as number)) {
+        minStars.value = null
+      } else {
+        updateStore()
+      }
     }
 
-    return data
-  },
-  methods: {
-    handleMinStarsUpdate: function () {
-      if (isNaN(this.minStars as number)) {
-        this.minStars = null
-      } else {
-        this.updateStore()
-      }
-    },
-    resetMinStars: function () {
-      this.minStars = null
+    const resetMinStars = () => {
+      minStars.value = null
       updateFilters({ minStars: null })
-    },
-    updateStore: function () {
-      updateFilters({ minStars: this.minStars })
     }
+
+    const updateStore = () => {
+      updateFilters({ minStars: minStars.value })
+    }
+
+    return { minStars, handleMinStarsUpdate, resetMinStars }
   }
 }
 </script>

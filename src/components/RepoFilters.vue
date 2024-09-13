@@ -32,13 +32,16 @@ import { updateFilters } from '@/stores/filters.store'
 
 export default {
   components: { LanguageSelector, MinStarsInput, DateInput },
-  methods: {
-    handleDateChange(action: string, event: any) {
+  setup() {
+    const handleDateChange = (action: string, event: any) => {
       updateFilters({ [action]: event.target.value })
-    },
-    handleDateReset(action: string) {
+    }
+
+    const handleDateReset = (action: string) => {
       updateFilters({ [action]: null })
     }
+
+    return { handleDateChange, handleDateReset }
   }
 }
 </script>

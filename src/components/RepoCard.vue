@@ -11,8 +11,10 @@
       {{ repo.full_name }}
     </a>
 
-    <div v-if="repo.description"
-class="text-sm">
+    <div
+      v-if="repo.description"
+      class="text-sm"
+    >
       {{ repo.description.slice(0, 120) }} {{ repo.description.length > 120 ? '...' : '' }}
     </div>
 

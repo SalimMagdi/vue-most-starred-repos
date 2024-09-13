@@ -27,30 +27,19 @@
 import { selectedLanguages } from '@/stores/selected-languages.store'
 import CodeIcon from '../assets/icons/CodeIcon.vue'
 import LanguageRepos from './LanguageRepos.vue'
-import { watch } from 'vue'
-
-interface ComponentData {
-  languages: string[]
-  controller: AbortController
-}
+import { onMounted, ref, watch, type Ref } from 'vue'
 
 export default {
   components: { LanguageRepos, CodeIcon },
-  data() {
-    const data: ComponentData = {
-      languages: [],
-      controller: new AbortController()
-    }
+  setup() {
+    const languages: Ref<string[]> = ref([])
 
-    return data
-  },
-  mounted() {
-    watch(selectedLanguages, () => this.setLanguages())
-  },
-  methods: {
-    setLanguages() {
-      this.languages = selectedLanguages.value
+    const setLanguages = () => {
+      languages.value = selectedLanguages.value
     }
+    onMounted(() => watch(selectedLanguages, setLanguages))
+
+    return { languages }
   }
 }
 </script>

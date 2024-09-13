@@ -20,56 +20,57 @@
 </template>
 
 <script lang="ts">
-interface ComponentData {
-  repos: any[] | null
-  controller: AbortController
-}
-import { watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue'
 import axios from 'axios'
 import RepoCard from './RepoCard.vue'
 import { filters } from '../stores/filters.store'
+
+const BASE_URL = 'https://api.github.com/search/repositories'
+
 export default {
   components: { RepoCard },
   props: {
     language: String
   },
-  data() {
-    const data: ComponentData = {
-      repos: null,
-      controller: new AbortController()
-    }
+  setup({ language }) {
+    const repos: Ref<any[] | null> = ref(null)
+    const controller: Ref<AbortController> = ref(new AbortController())
 
-    return data
-  },
-  mounted() {
-    watch(filters, () => this.searchRepos())
+    const searchRepos = async () => {
+      controller.value?.abort()
+      controller.value = new AbortController()
 
-    this.searchRepos()
-  },
-  beforeUnmount() {
-    this.controller?.abort()
-  },
-  methods: {
-    async searchRepos() {
-      this.controller?.abort()
-      this.controller = new AbortController()
-
-      const { data } = await axios.get(this.generateUrl(), {
-        signal: this.controller.signal
+      const { data } = await axios.get(generateUrl(), {
+        signal: controller.value.signal
       })
 
-      this.repos = data.items
-    },
-    generateUrl() {
+      repos.value = data.items
+    }
+
+    // FIXME: this can be done better
+    const generateUrl = () => {
       const { minStars, fromDate, toDate } = filters.value
       const minStarsQuery = minStars ? `+stars:>=${minStars}` : '+stars:>=0' // For some reason it's needed to always add stars in the query
       const fromDateQuery = fromDate ? `+created:>=${fromDate}` : ''
       const toDateQuery = toDate ? `+created:<=${toDate}` : ''
 
       // Special case
-      const language = this.language?.replace('#', '%23')
+      const lang = language?.replace('#', '%23')
 
-      return `https://api.github.com/search/repositories?q=language:${language}${minStarsQuery}${fromDateQuery}${toDateQuery}&sort=stars&per_page=6`
+      // I think this api endpoint is broken
+      return `${BASE_URL}?q=language:${lang}${minStarsQuery}${fromDateQuery}${toDateQuery}&sort=stars&per_page=6`
+    }
+
+    onMounted(() => {
+      watch(filters, searchRepos)
+
+      searchRepos()
+    })
+
+    onBeforeUnmount(() => controller.value?.abort())
+
+    return {
+      repos
     }
   }
 }

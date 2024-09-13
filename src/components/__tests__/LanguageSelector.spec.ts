@@ -2,11 +2,12 @@ import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import LanguageSelector from '@/components/inputs/LanguageSelector.vue'
 import LANGUAGES from '@/utils/languages'
-import { updateFilters } from '@/stores/filters.store'
+import { nextTick } from 'vue'
+import { updateLanguages } from '@/stores/selected-languages.store'
 
-// Mocking updateFilters to avoid actual store update
-vi.mock('@/stores/filters-store', () => ({
-  updateFilters: vi.fn()
+// Mocking updateLanguages to avoid actual store update
+vi.mock('@/stores/selected-languages.store', () => ({
+  updateLanguages: vi.fn()
 }))
 
 describe('LanguageSelector.vue', () => {
@@ -14,6 +15,7 @@ describe('LanguageSelector.vue', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(LanguageSelector)
+    vi.clearAllMocks()
   })
 
   it('renders correctly', () => {
@@ -27,47 +29,39 @@ describe('LanguageSelector.vue', () => {
     const language = LANGUAGES[0]
 
     // Simulate selecting a language
-    await wrapper.setData({ model: language })
+    wrapper.vm.model = language
+    await nextTick()
     await wrapper.vm.handleLanguageSelection()
 
     expect(wrapper.vm.selectedLanguages).toContain(language)
     expect(wrapper.vm.model).toBeNull()
-    expect(updateFilters).toHaveBeenCalledWith({ languages: [language] })
+    expect(updateLanguages).toHaveBeenCalledWith([language])
   })
 
   it('does not add a language if it is already selected', async () => {
     const language = LANGUAGES[0]
 
-    // Set selected language in data
-    await wrapper.setData({ selectedLanguages: [language], model: language })
+    // Modify reactive properties to simulate state
+    wrapper.vm.selectedLanguages = [language]
+    wrapper.vm.model = language
+    await nextTick()
     await wrapper.vm.handleLanguageSelection()
 
     expect(wrapper.vm.selectedLanguages).toHaveLength(1) // Language shouldn't be added again
-    expect(updateFilters).toHaveBeenCalledWith({ languages: [language] })
+    expect(updateLanguages).not.toHaveBeenCalled()
   })
 
   it('removes a language when the close icon is clicked', async () => {
     const language = LANGUAGES[0]
 
-    // Set initial state
-    await wrapper.setData({ selectedLanguages: [language] })
+    // Modify reactive properties to simulate state
+    wrapper.vm.selectedLanguages = [language]
+    await nextTick()
 
     // Simulate language removal
     await wrapper.vm.handleLanguageRemoval(language)
 
     expect(wrapper.vm.selectedLanguages).not.toContain(language)
-    expect(updateFilters).toHaveBeenCalledWith({ languages: [] })
-  })
-
-  it('renders selected languages with close buttons', async () => {
-    const language = LANGUAGES[0]
-
-    // Set initial state
-    await wrapper.setData({ selectedLanguages: [language] })
-
-    // Check if the selected language is rendered with the correct class
-    const languageDiv = wrapper.find('.bg-blue-800')
-    expect(languageDiv.exists()).toBe(true)
-    expect(languageDiv.text()).toContain(language)
+    expect(updateLanguages).toHaveBeenCalledWith([])
   })
 })

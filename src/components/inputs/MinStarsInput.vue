@@ -2,7 +2,11 @@
   <div class="text-sm mb-1 flex justify-between">
     <span>Min number of stars</span>
 
-    <CloseIcon v-if="minStars" class="w-4 cursor-normal" @click="resetMinStars" />
+    <CloseIcon
+      v-if="minStars"
+      class="w-4 cursor-normal"
+      @click="resetMinStars"
+    />
   </div>
 
   <input

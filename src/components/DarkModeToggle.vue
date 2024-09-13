@@ -7,7 +7,8 @@
       v-model="darkMode"
       @change="toggleDarkMode"
     />
-    <label for="checkbox" class="checkbox-label">
+    <label for="checkbox"
+class="checkbox-label">
       <i class="fas fa-moon"></i>
       <i class="fas fa-sun"></i>
       <span class="ball"></span>
@@ -20,18 +21,18 @@ export default {
   data() {
     return {
       darkMode: true
-    };
+    }
   },
   methods: {
     toggleDarkMode(event: any) {
       if (event.target.checked) {
-        document.body.setAttribute('data-mode', 'dark');
+        document.body.setAttribute('data-mode', 'dark')
       } else {
-        document.body.removeAttribute('data-mode');
+        document.body.removeAttribute('data-mode')
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>

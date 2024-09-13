@@ -53,6 +53,6 @@ const LANGUAGES = [
   'Sass',
   'Less',
   'Stylus'
-];
+]
 
-export default LANGUAGES;
+export default LANGUAGES

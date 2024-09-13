@@ -24,14 +24,14 @@
 </template>
 
 <script lang="ts">
-import CodeIcon from '../assets/icons/CodeIcon.vue';
-import LanguageRepos from './LanguageRepos.vue';
-import { filters } from '@/stores/filters-store';
-import { watch } from 'vue';
+import { selectedLanguages } from '@/stores/selected-languages.store'
+import CodeIcon from '../assets/icons/CodeIcon.vue'
+import LanguageRepos from './LanguageRepos.vue'
+import { watch } from 'vue'
 
 interface ComponentData {
-  languages: string[];
-  controller: AbortController;
+  languages: string[]
+  controller: AbortController
 }
 
 export default {
@@ -40,19 +40,19 @@ export default {
     const data: ComponentData = {
       languages: [],
       controller: new AbortController()
-    };
+    }
 
-    return data;
+    return data
   },
   mounted() {
-    watch(filters, () => this.setLanguages());
+    watch(selectedLanguages, () => this.setLanguages())
   },
   methods: {
     setLanguages() {
-      this.languages = filters.value.languages;
+      this.languages = selectedLanguages.value
     }
   }
-};
+}
 </script>
 
 <style>

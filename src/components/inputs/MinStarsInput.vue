@@ -10,16 +10,16 @@
     type="number"
     placeholder="Enter min number of stars"
     class="border w-full h-10 rounded text-sm dark:bg-gray-700 dark:border-gray-700 px-3"
-    @change="handleMinStarsUpdate"
+    @blur="handleMinStarsUpdate"
   />
 </template>
 
 <script lang="ts">
-import CloseIcon from '@/assets/icons/CloseIcon.vue';
-import { updateFilters } from '@/stores/filters-store';
+import CloseIcon from '@/assets/icons/CloseIcon.vue'
+import { updateFilters } from '@/stores/filters.store'
 
 interface ComponentData {
-  minStars: number | null;
+  minStars: number | null
 }
 
 export default {
@@ -27,25 +27,25 @@ export default {
   data() {
     const data: ComponentData = {
       minStars: null
-    };
+    }
 
-    return data;
+    return data
   },
   methods: {
     handleMinStarsUpdate: function () {
       if (isNaN(this.minStars as number)) {
-        this.minStars = null;
+        this.minStars = null
       } else {
-        this.updateStore();
+        this.updateStore()
       }
     },
     resetMinStars: function () {
-      this.minStars = null;
-      updateFilters({ minStars: null });
+      this.minStars = null
+      updateFilters({ minStars: null })
     },
     updateStore: function () {
-      updateFilters({ minStars: this.minStars });
+      updateFilters({ minStars: this.minStars })
     }
   }
-};
+}
 </script>

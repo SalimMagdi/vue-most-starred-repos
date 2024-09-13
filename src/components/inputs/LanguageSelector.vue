@@ -22,14 +22,14 @@
 </template>
 
 <script lang="ts">
-import LANGUAGES from '@/utils/languages';
-import CloseIcon from '@/assets/icons/CloseIcon.vue';
-import { updateFilters } from '@/stores/filters-store';
+import LANGUAGES from '@/utils/languages'
+import CloseIcon from '@/assets/icons/CloseIcon.vue'
+import { updateLanguages } from '@/stores/selected-languages.store'
 
 interface ComponentData {
-  selectedLanguages: string[];
-  model: string | null;
-  LANGUAGES: string[];
+  selectedLanguages: string[]
+  model: string | null
+  LANGUAGES: string[]
 }
 
 export default {
@@ -39,24 +39,24 @@ export default {
       selectedLanguages: [],
       model: null,
       LANGUAGES
-    };
+    }
 
-    return data;
+    return data
   },
   methods: {
     handleLanguageSelection() {
       !this.selectedLanguages.includes(this.model as string) &&
-        this.selectedLanguages.push(this.model as string);
-      this.model = null;
-      this.updateStore();
+        this.selectedLanguages.push(this.model as string)
+      this.model = null
+      this.updateStore()
     },
     handleLanguageRemoval(language: string) {
-      this.selectedLanguages = this.selectedLanguages.filter((lang) => lang !== language);
-      this.updateStore();
+      this.selectedLanguages = this.selectedLanguages.filter((lang) => lang !== language)
+      this.updateStore()
     },
     updateStore() {
-      updateFilters({ languages: this.selectedLanguages });
+      updateLanguages(this.selectedLanguages)
     }
   }
-};
+}
 </script>

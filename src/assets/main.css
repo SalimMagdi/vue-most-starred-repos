@@ -5,3 +5,7 @@
 * {
   transition: 0.11s;
 }
+
+input[type='date'] {
+  -webkit-appearance: none;
+}

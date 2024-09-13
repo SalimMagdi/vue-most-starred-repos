@@ -11,7 +11,8 @@
       {{ repo.full_name }}
     </a>
 
-    <div v-if="repo.description" class="text-sm">
+    <div v-if="repo.description"
+class="text-sm">
       {{ repo.description.slice(0, 120) }} {{ repo.description.length > 120 ? '...' : '' }}
     </div>
 
@@ -25,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import HeartIcon from '../assets/icons/HeartIcon.vue';
+import HeartIcon from '../assets/icons/HeartIcon.vue'
 
 export default {
   components: { HeartIcon },
@@ -34,8 +35,8 @@ export default {
   },
   computed: {
     creationDate() {
-      return new Date(this.repo?.created_at).toLocaleDateString();
+      return new Date(this.repo?.created_at).toLocaleDateString()
     }
   }
-};
+}
 </script>

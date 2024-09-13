@@ -7,6 +7,7 @@
 
   <input
     v-model="value"
+    :max="maxDate"
     type="date"
     class="border w-full h-10 rounded text-sm dark:bg-gray-700 dark:border-gray-700 px-3"
     @change="handleValueChange"
@@ -14,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import CloseIcon from '@/assets/icons/CloseIcon.vue';
+import CloseIcon from '@/assets/icons/CloseIcon.vue'
 
 export default {
   components: { CloseIcon },
@@ -24,17 +25,23 @@ export default {
   emits: ['valueChange', 'valueReset'],
   data() {
     return {
-      value: null
-    };
+      value: null,
+      maxDate: this.getMaxDate()
+    }
   },
   methods: {
     handleValueChange(event: any) {
-      this.$emit('valueChange', event);
+      this.$emit('valueChange', event)
     },
     handleInputReset() {
-      this.value = null;
-      this.$emit('valueReset');
+      this.value = null
+      this.$emit('valueReset')
+    },
+    getMaxDate() {
+      const isoDate = new Date().toISOString()
+
+      return isoDate.slice(0, isoDate.indexOf('T')).replace(/\//g, '-')
     }
   }
-};
+}
 </script>

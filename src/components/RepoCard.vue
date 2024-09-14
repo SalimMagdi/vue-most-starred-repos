@@ -33,5 +33,5 @@ import HeartIcon from '../assets/icons/HeartIcon.vue'
 
 const { repo } = defineProps<{ repo: any }>()
 
-const creationDate = computed(() => new Date(repo.value?.created_at).toLocaleDateString())
+const creationDate = computed(() => new Date(repo?.created_at).toLocaleDateString())
 </script>

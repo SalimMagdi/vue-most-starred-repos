@@ -1,9 +1,9 @@
 <template>
-  <h2 class="text-l font-bold">Language(s)</h2>
+  <h2 class="text-l font-bold mb-1">Language(s)</h2>
   <hr class="mb-3 dark:border-gray-700" />
   <LanguageSelector />
 
-  <h2 class="text-l font-bold mt-6">Filters</h2>
+  <h2 class="text-l font-bold mt-6 mb-1">Filters</h2>
   <hr class="mb-3 dark:border-gray-700" />
 
   <div class="mt-6">

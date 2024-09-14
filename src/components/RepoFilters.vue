@@ -1,47 +1,68 @@
 <template>
-  <h2 class="text-l font-bold">Filters</h2>
+  <h2 class="text-l font-bold">Language(s)</h2>
   <hr class="mb-3 dark:border-gray-700" />
   <LanguageSelector />
 
-  <div class="mt-6">
-    <MinStarsInput />
-  </div>
+  <h2 class="text-l font-bold mt-6">Filters</h2>
+  <hr class="mb-3 dark:border-gray-700" />
 
   <div class="mt-6">
-    <DateInput
-      :label="'From:'"
-      @valueChange="($event) => handleDateChange('fromDate', $event)"
-      @valueReset="() => handleDateReset('fromDate')"
+    <FilterInput
+      v-model="filters.minStars"
+      :type="'text'"
+      :label="'Min stars'"
+      :placeholder="'Minimum number of repo stars'"
     />
   </div>
 
   <div class="mt-6">
-    <DateInput
-      :label="'To:'"
-      @valueChange="($event) => handleDateChange('toDate', $event)"
-      @valueReset="() => handleDateReset('toDate')"
+    <FilterInput
+      v-model="filters.fromDate"
+      :type="'date'"
+      :label="'From (use the date picker)'"
     />
+  </div>
+
+  <div class="mt-6">
+    <FilterInput
+      v-model="filters.toDate"
+      :type="'date'"
+      :label="'To (use the date picker)'"
+    />
+  </div>
+
+  <div class="mt-6">
+    <button
+      type="button"
+      class="w-full h-10 rounded text-sm bg-blue-900 active:bg-blue-800 px-3"
+      @click="handleFiltersChange"
+    >
+      Apply Filters
+    </button>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import LanguageSelector from './inputs/LanguageSelector.vue'
-import MinStarsInput from './inputs/MinStarsInput.vue'
-import DateInput from './inputs/DateInput.vue'
-import { updateFilters } from '@/stores/filters.store'
+import FilterInput from './inputs/FilterInput.vue'
+import { updateFilters, type RepoFilters } from '@/stores/filters.store'
+import { ref, type Ref } from 'vue'
 
-export default {
-  components: { LanguageSelector, MinStarsInput, DateInput },
-  setup() {
-    const handleDateChange = (action: string, event: any) => {
-      updateFilters({ [action]: event.target.value })
-    }
+const filters: Ref<RepoFilters> = ref({
+  minStars: '',
+  fromDate: '',
+  toDate: ''
+})
 
-    const handleDateReset = (action: string) => {
-      updateFilters({ [action]: null })
-    }
-
-    return { handleDateChange, handleDateReset }
+const validateFilters = (filters: RepoFilters) => {
+  // TODO: More validations to be added
+  return {
+    ...filters,
+    minStars: /^[0-9]*$/.test(filters.minStars) ? filters.minStars : ''
   }
+}
+
+const handleFiltersChange = () => {
+  updateFilters({ ...validateFilters(filters.value) })
 }
 </script>

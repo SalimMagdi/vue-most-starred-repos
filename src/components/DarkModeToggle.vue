@@ -18,22 +18,16 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue'
 
-export default {
-  setup() {
-    const darkMode = ref(true)
+const darkMode = ref(true)
 
-    const toggleDarkMode = (event: any) => {
-      if (event.target.checked) {
-        document.body.setAttribute('data-mode', 'dark')
-      } else {
-        document.body.removeAttribute('data-mode')
-      }
-    }
-
-    return { darkMode, toggleDarkMode }
+const toggleDarkMode = (event: any) => {
+  if (event.target.checked) {
+    document.body.setAttribute('data-mode', 'dark')
+  } else {
+    document.body.removeAttribute('data-mode')
   }
 }
 </script>

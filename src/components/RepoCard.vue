@@ -27,18 +27,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { computed } from 'vue'
 import HeartIcon from '../assets/icons/HeartIcon.vue'
 
-export default {
-  components: { HeartIcon },
-  props: {
-    repo: Object
-  },
-  computed: {
-    creationDate() {
-      return new Date(this.repo?.created_at).toLocaleDateString()
-    }
-  }
-}
+const { repo } = defineProps<{ repo: any }>()
+
+const creationDate = computed(() => new Date(repo.value?.created_at).toLocaleDateString())
 </script>

@@ -36,45 +36,32 @@
   </select>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import LANGUAGES from '@/utils/languages'
 import CloseIcon from '@/assets/icons/CloseIcon.vue'
 import { updateLanguages } from '@/stores/selected-languages.store'
 import { ref, type Ref } from 'vue'
 
-export default {
-  components: { CloseIcon },
-  setup() {
-    const selectedLanguages: Ref<string[]> = ref([])
-    const model: Ref<string | null> = ref(null)
-    const allLanguages: string[] = LANGUAGES
+const selectedLanguages: Ref<string[]> = ref([])
+const model: Ref<string | null> = ref(null)
+const allLanguages: string[] = LANGUAGES
 
-    const handleLanguageSelection = () => {
-      if (selectedLanguages.value.includes(model.value as string)) {
-        return
-      }
-
-      selectedLanguages.value.push(model.value as string)
-      model.value = null
-      updateStore()
-    }
-
-    const handleLanguageRemoval = (language: string) => {
-      selectedLanguages.value = selectedLanguages.value.filter((lang) => lang !== language)
-      updateStore()
-    }
-
-    const updateStore = () => {
-      updateLanguages(selectedLanguages.value)
-    }
-
-    return {
-      selectedLanguages,
-      model,
-      allLanguages,
-      handleLanguageSelection,
-      handleLanguageRemoval
-    }
+const handleLanguageSelection = () => {
+  if (selectedLanguages.value.includes(model.value as string)) {
+    return
   }
+
+  selectedLanguages.value.push(model.value as string)
+  model.value = null
+  updateStore()
+}
+
+const handleLanguageRemoval = (language: string) => {
+  selectedLanguages.value = selectedLanguages.value.filter((lang) => lang !== language)
+  updateStore()
+}
+
+const updateStore = () => {
+  updateLanguages(selectedLanguages.value)
 }
 </script>

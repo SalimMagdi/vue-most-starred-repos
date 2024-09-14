@@ -23,25 +23,18 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { selectedLanguages } from '@/stores/selected-languages.store'
 import CodeIcon from '../assets/icons/CodeIcon.vue'
 import LanguageRepos from './LanguageRepos.vue'
 import { onMounted, ref, watch, type Ref } from 'vue'
 
-export default {
-  components: { LanguageRepos, CodeIcon },
-  setup() {
-    const languages: Ref<string[]> = ref([])
+const languages: Ref<string[]> = ref([])
 
-    const setLanguages = () => {
-      languages.value = selectedLanguages.value
-    }
-    onMounted(() => watch(selectedLanguages, setLanguages))
-
-    return { languages }
-  }
+const setLanguages = () => {
+  languages.value = selectedLanguages.value
 }
+onMounted(() => watch(selectedLanguages, setLanguages))
 </script>
 
 <style>

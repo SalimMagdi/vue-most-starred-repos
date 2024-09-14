@@ -19,7 +19,7 @@
   />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue'
 import axios from 'axios'
 import RepoCard from './RepoCard.vue'
@@ -27,51 +27,40 @@ import { filters } from '../stores/filters.store'
 
 const BASE_URL = 'https://api.github.com/search/repositories'
 
-export default {
-  components: { RepoCard },
-  props: {
-    language: String
-  },
-  setup({ language }) {
-    const repos: Ref<any[] | null> = ref(null)
-    const controller: Ref<AbortController> = ref(new AbortController())
+const { language } = defineProps<{ language: string }>()
+const repos: Ref<any[] | null> = ref(null)
+const controller: Ref<AbortController> = ref(new AbortController())
 
-    const searchRepos = async () => {
-      controller.value?.abort()
-      controller.value = new AbortController()
+const searchRepos = async () => {
+  controller.value?.abort()
+  controller.value = new AbortController()
 
-      const { data } = await axios.get(generateUrl(), {
-        signal: controller.value.signal
-      })
+  const { data } = await axios.get(generateUrl(), {
+    signal: controller.value.signal
+  })
 
-      repos.value = data.items
-    }
-
-    // FIXME: this can be done better
-    const generateUrl = () => {
-      const { minStars, fromDate, toDate } = filters.value
-      const minStarsQuery = minStars ? `+stars:>=${minStars}` : '+stars:>=0' // For some reason it's needed to always add stars in the query
-      const fromDateQuery = fromDate ? `+created:>=${fromDate}` : ''
-      const toDateQuery = toDate ? `+created:<=${toDate}` : ''
-
-      // Special case
-      const lang = language?.replace('#', '%23')
-
-      // I think this api endpoint is broken
-      return `${BASE_URL}?q=language:${lang}${minStarsQuery}${fromDateQuery}${toDateQuery}&sort=stars&per_page=6`
-    }
-
-    onMounted(() => {
-      watch(filters, searchRepos)
-
-      searchRepos()
-    })
-
-    onBeforeUnmount(() => controller.value?.abort())
-
-    return {
-      repos
-    }
-  }
+  repos.value = data.items
 }
+
+// FIXME: this can be done better
+const generateUrl = () => {
+  const { minStars, fromDate, toDate } = filters.value
+  const minStarsQuery = minStars ? `+stars:>=${minStars}` : '+stars:>=0' // For some reason it's needed to always add stars in the query
+  const fromDateQuery = fromDate ? `+created:>=${fromDate}` : ''
+  const toDateQuery = toDate ? `+created:<=${toDate}` : ''
+
+  // Special case
+  const lang = language?.replace('#', '%23')
+
+  // I think this api endpoint is broken
+  return `${BASE_URL}?q=language:${lang}${minStarsQuery}${fromDateQuery}${toDateQuery}&sort=stars&per_page=6`
+}
+
+onMounted(() => {
+  watch(filters, searchRepos)
+
+  searchRepos()
+})
+
+onBeforeUnmount(() => controller.value?.abort())
 </script>

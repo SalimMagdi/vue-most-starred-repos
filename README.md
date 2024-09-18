@@ -1,4 +1,5 @@
 # vue-most-starred-repos
+This repository contains my solution for a frontend challenge. The task was to create a web application that allows users to find the most starred GitHub repositories for a given programming language within a selected time frame, utilizing the GitHub Search API
 
 ## 🔥 Live Demo
 
